@@ -32,7 +32,7 @@
             <h3 class="text-center">List of blocked authors</h3>
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Type username..." v-model.trim="inputUsername"
-                    v-on:keypress.enter="addUser" />
+                    v-on:keypress.enter="addUserToChromeStorage" />
                 <div class="input-group-append">
                     <button class="btn btn-danger" v-on:click="addUserToChromeStorage">Block user</button>
                 </div>
