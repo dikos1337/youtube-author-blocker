@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Author Blocker</title>
+    <link rel="stylesheet" href="style/bootstrap.min.css" />
+
+    <style>
+        html {
+            min-width: 350px
+        }
+
+        .list-group-item {
+            margin-bottom: 5px;
+        }
+
+        .container {
+            margin-bottom: 3px;
+        }
+
+        .list-group-item {
+            padding: .4rem .75rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="popup">
+        <div class="container">
+            <h3 class="text-center">List of blocked authors</h3>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Type username..." v-model.trim="inputUsername"
+                    v-on:keypress.enter="addUser" />
+                <div class="input-group-append">
+                    <button class="btn btn-danger" v-on:click="addUserToChromeStorage">Block user</button>
+                </div>
+            </div>
+            <br>
+            <ul class="list-group">
+                <div v-for="(user, index) in localUserList">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{user}}
+                        <button class="badge badge-danger badge-pill"
+                            v-on:click="deleteUserFromChromeStorage(user)">del</button>
+                    </li>
+                </div>
+            </ul>
+        </div>
+    </div>
+
+    <script src="js/vue.global.prod.js"></script>
+    <script src="js/popup.js"></script>
+</body>
+
+</html>
