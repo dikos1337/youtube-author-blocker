@@ -9,7 +9,7 @@ const App = {
         deleteUserFromChromeStorage(username) {
             chrome.storage.sync.get("blockedAuthors", data => {
                 let tmpUserList = data["blockedAuthors"] || [];
-                tmpUserList = tmpUserList.filter(item => item != username)
+                tmpUserList = tmpUserList.filter(item => item != username);
                 chrome.storage.sync.set({ ["blockedAuthors"]: tmpUserList }, function () { });
                 this.updateLocalUserList();
             });
@@ -18,22 +18,29 @@ const App = {
             if (this.inputUsername.trim()) {  // checking that the input is not empty
                 chrome.storage.sync.get("blockedAuthors", data => {
                     const tmpUserList = data["blockedAuthors"] || [];
-                    tmpUserList.push(this.inputUsername.slice(0, 40));  // max length is 40
+                    tmpUserList.push(this.inputUsername);
                     chrome.storage.sync.set({ ["blockedAuthors"]: tmpUserList }, function () { });
-                    this.inputUsername = ""  // Clear input
-                    this.updateLocalUserList()
+                    this.inputUsername = "";  // Clear input
+                    this.updateLocalUserList();
                 });
             }
         },
         updateLocalUserList() {
             chrome.storage.sync.get("blockedAuthors", data => {
                 const tmpUserList = data["blockedAuthors"] || [];
-                this.localUserList = tmpUserList
+                this.localUserList = tmpUserList;
             })
         }
     },
+    watch: {
+        inputUsername(value) {
+            if (value.length >= 30) {
+                this.inputUsername = this.inputUsername.slice(0, 30); // max length is 30
+            }
+        }
+    },
     mounted: function () {
-        this.updateLocalUserList()
+        this.updateLocalUserList();
     }
 }
 
