@@ -12,16 +12,24 @@
             min-width: 350px
         }
 
-        .list-group-item {
+        hr {
+            margin-top: 10px;
             margin-bottom: 5px;
         }
 
         .container {
-            margin-bottom: 3px;
+            margin-top: 0.5rem;
+            margin-bottom: 15px;
+        }
+
+        .list-group {
+            max-height: 300px;
+            overflow-y: auto;
         }
 
         .list-group-item {
             padding: .4rem .75rem;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -38,17 +46,15 @@
                 </div>
             </div>
             <hr>
-            <div v-if="localUserList.length">
-                <ul class="list-group">
-                    <div v-for="(user, index) in localUserList">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            {{user}}
-                            <button class="badge badge-danger badge-pill"
-                                v-on:click="deleteUserFromChromeStorage(user)">del</button>
-                        </li>
-                    </div>
-                </ul>
-            </div>
+            <ul class="list-group" v-if="localUserList.length">
+                <div v-for="(user, index) in localUserList">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{user}}
+                        <button class="badge badge-danger badge-pill"
+                            v-on:click="deleteUserFromChromeStorage(user)">del</button>
+                    </li>
+                </div>
+            </ul>
             <div v-else class="h4 text-center">
                 List is empty
             </div>
