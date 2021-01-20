@@ -6,25 +6,15 @@
   "icons": {
     "128": "style/icon128.png"
   },
-  "permissions": [
-    "storage",
-    "tabs"
-  ],
+  "permissions": ["storage", "tabs"],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "background": {
-    "scripts": [
-      "js/background.js"
-    ]
+    "scripts": ["js/background.js"]
   },
   "content_scripts": [
     {
-      "matches": [
-        "*://www.youtube.com/*"
-      ],
-      "js": [
-        "js/jquery-3.5.1.min.js",
-        "js/content.js"
-      ]
+      "matches": ["*://www.youtube.com/*"],
+      "js": ["js/jquery-3.5.1.min.js", "js/content.js"]
     }
   ],
   "browser_action": {
