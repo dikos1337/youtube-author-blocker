@@ -12,13 +12,14 @@ function hideAuthors(blockedAuthors) {
     authors.each(function () {
       if (blockedAuthors.includes($(this).text())) {
         currentBlock.detach();
-        // console.log($(this).text() + " is blocked")
       }
     });
   });
 }
 
 function getDataAndHideAuthors() {
+  /* Receives data from storage and calls hideAuthors function */
+
   chrome.storage.sync.get("blockedAuthors", function (data) {
     const blockedAuthors = data["blockedAuthors"] || [];
     hideAuthors(blockedAuthors);
@@ -26,6 +27,9 @@ function getDataAndHideAuthors() {
 }
 
 function waitForEl(selector, callback, maxtries = false, interval = 100) {
+  /* The function waits and looks for the element to appear on the page
+     then calls the callback that does something with this element */
+
   const poller = setInterval(() => {
     const el = jQuery(selector);
     const retry = maxtries === false || maxtries-- > 0;
@@ -36,6 +40,9 @@ function waitForEl(selector, callback, maxtries = false, interval = 100) {
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  /* Function catching the moment when trending page completely loads 
+     then calls function that hide authors from block list */
+
   if (request.message.changeInfo.status === "complete") {
     if (window.location.href.includes("/feed/trending")) {
       let pollerCounter = 0;

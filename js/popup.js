@@ -45,7 +45,7 @@ const App = {
       }
     },
   },
-  mounted: function () {
+  mounted() {
     this.updateLocalUserList();
   },
 };
