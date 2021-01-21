@@ -10,26 +10,22 @@ const App = {
       chrome.storage.sync.get("blockedAuthors", (data) => {
         let tmpUserList = data["blockedAuthors"] || [];
         tmpUserList = tmpUserList.filter((item) => item != username);
-        chrome.storage.sync.set(
-          { ["blockedAuthors"]: tmpUserList },
-          function () {}
-        );
+        chrome.storage.sync.set({ ["blockedAuthors"]: tmpUserList });
         this.updateLocalUserList();
       });
     },
     addUserToChromeStorage() {
+      // checking that the input is not empty
       if (this.inputUsername.trim()) {
-        // checking that the input is not empty
-        chrome.storage.sync.get("blockedAuthors", (data) => {
-          const tmpUserList = data["blockedAuthors"] || [];
-          tmpUserList.push(this.inputUsername);
-          chrome.storage.sync.set(
-            { ["blockedAuthors"]: tmpUserList },
-            function () {}
-          );
-          this.inputUsername = ""; // Clear input
-          this.updateLocalUserList();
-        });
+        if (this.isUserAlreadyBlocked(this.inputUsername) === false) {
+          chrome.storage.sync.get("blockedAuthors", (data) => {
+            const tmpUserList = data["blockedAuthors"] || [];
+            tmpUserList.push(this.inputUsername);
+            chrome.storage.sync.set({ ["blockedAuthors"]: tmpUserList });
+            this.inputUsername = ""; // Clear input
+            this.updateLocalUserList();
+          });
+        }
       }
     },
     updateLocalUserList() {
@@ -37,6 +33,9 @@ const App = {
         const tmpUserList = data["blockedAuthors"] || [];
         this.localUserList = tmpUserList;
       });
+    },
+    isUserAlreadyBlocked(username) {
+      return this.localUserList.includes(username);
     },
   },
   watch: {
